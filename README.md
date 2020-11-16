@@ -2,7 +2,7 @@
 
 DD Image is a python script for search and delete duplicate images.
 
-##Supported formats:
+## Supported formats:
 
-*[jpg]
-*[png]
+* [jpg]
+* [png]
