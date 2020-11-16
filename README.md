@@ -16,11 +16,11 @@ pip install opencv-contrib-python
 ```
 ## Usage
 
-Automatic Mode
+-Automatic Mode
 ```bash
 python3 DDImage /path_to_folder_whit_images True
 ```
-Manual Mode, when an image and the duplicate is showed on your screen, press esc for delete the copy or press any other key for do nothing
+-Manual Mode, when an image and the duplicate is showed on your screen, press esc for delete the copy or press any other key for do nothing
 ```bash
 python3 DDImage /path_to_folder_whit_images
 ```
