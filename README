@@ -1,4 +1,8 @@
-*First GitHub Project*
-*DD Image*
+# DD Image
 
-Find duplicate images on a folder and choose to delete the duplicate one or conserve it.
+DD Image is a python script for search and delete duplicate images.
+
+##Supported formats:
+
+*(#jpg)
+*(#png)
