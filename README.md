@@ -11,6 +11,7 @@ DD Image is a python script for search and delete duplicate images.
 If you don't have the following dependencies use the package manager [pip](https://pip.pypa.io/en/stable/) to install dependencies.
 
 ```bash
+sudo apt install python3-pip
 pip install opencv-python
 pip install opencv-contrib-python
 ```
