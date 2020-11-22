@@ -1,7 +1,7 @@
 #include "DDimage.hpp"
 bool read_types(vector<string> &types){
     string line;
-  ifstream myfile ("allowed_types.txt");
+  ifstream myfile ("../allowed_types.txt");
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )
