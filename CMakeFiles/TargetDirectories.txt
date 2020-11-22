@@ -1,0 +1,3 @@
+/home/i82dianr/DDimage/CMakeFiles/rebuild_cache.dir
+/home/i82dianr/DDimage/CMakeFiles/edit_cache.dir
+/home/i82dianr/DDimage/CMakeFiles/DDimage.dir

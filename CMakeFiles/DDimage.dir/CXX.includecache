@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/i82dianr/DDimage/DDimage.hpp
+iostream
+-
+dirent.h
+-
+sys/types.h
+-
+vector
+-
+fstream
+-
+opencv2/core/core.hpp
+-
+opencv2/core/utility.hpp
+-
+opencv2/highgui/highgui.hpp
+-
+opencv2/imgproc/imgproc.hpp
+-
+opencv2/video.hpp
+-
+opencv2/calib3d/calib3d.hpp
+-
+
+/home/i82dianr/DDimage/main.cpp
+DDimage.hpp
+/home/i82dianr/DDimage/DDimage.hpp
+
