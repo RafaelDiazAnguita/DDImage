@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/DDimage.dir/common.cpp.o"
+  "CMakeFiles/DDimage.dir/compare.cpp.o"
   "CMakeFiles/DDimage.dir/main.cpp.o"
   "CMakeFiles/DDimage.dir/types.cpp.o"
   "DDimage"

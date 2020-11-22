@@ -15,9 +15,7 @@ bool read_types(vector<string> &types){
   return false;
 }
 
-bool check_type(string name){
-    vector<string> types;
-    read_types(types);
+bool check_type(string name,vector<string> types){
     for (size_t i = 0; i < types.size(); i++)
     if(name.find(types[i])!=string::npos)
     return true;

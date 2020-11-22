@@ -123,6 +123,60 @@ DDimage/fast:
 	$(MAKE) -f CMakeFiles/DDimage.dir/build.make CMakeFiles/DDimage.dir/build
 .PHONY : DDimage/fast
 
+common.o: common.cpp.o
+
+.PHONY : common.o
+
+# target to build an object file
+common.cpp.o:
+	$(MAKE) -f CMakeFiles/DDimage.dir/build.make CMakeFiles/DDimage.dir/common.cpp.o
+.PHONY : common.cpp.o
+
+common.i: common.cpp.i
+
+.PHONY : common.i
+
+# target to preprocess a source file
+common.cpp.i:
+	$(MAKE) -f CMakeFiles/DDimage.dir/build.make CMakeFiles/DDimage.dir/common.cpp.i
+.PHONY : common.cpp.i
+
+common.s: common.cpp.s
+
+.PHONY : common.s
+
+# target to generate assembly for a file
+common.cpp.s:
+	$(MAKE) -f CMakeFiles/DDimage.dir/build.make CMakeFiles/DDimage.dir/common.cpp.s
+.PHONY : common.cpp.s
+
+compare.o: compare.cpp.o
+
+.PHONY : compare.o
+
+# target to build an object file
+compare.cpp.o:
+	$(MAKE) -f CMakeFiles/DDimage.dir/build.make CMakeFiles/DDimage.dir/compare.cpp.o
+.PHONY : compare.cpp.o
+
+compare.i: compare.cpp.i
+
+.PHONY : compare.i
+
+# target to preprocess a source file
+compare.cpp.i:
+	$(MAKE) -f CMakeFiles/DDimage.dir/build.make CMakeFiles/DDimage.dir/compare.cpp.i
+.PHONY : compare.cpp.i
+
+compare.s: compare.cpp.s
+
+.PHONY : compare.s
+
+# target to generate assembly for a file
+compare.cpp.s:
+	$(MAKE) -f CMakeFiles/DDimage.dir/build.make CMakeFiles/DDimage.dir/compare.cpp.s
+.PHONY : compare.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -186,6 +240,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... DDimage"
+	@echo "... common.o"
+	@echo "... common.i"
+	@echo "... common.s"
+	@echo "... compare.o"
+	@echo "... compare.i"
+	@echo "... compare.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

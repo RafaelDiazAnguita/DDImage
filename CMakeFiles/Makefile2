@@ -74,12 +74,12 @@ clean: CMakeFiles/DDimage.dir/clean
 CMakeFiles/DDimage.dir/all:
 	$(MAKE) -f CMakeFiles/DDimage.dir/build.make CMakeFiles/DDimage.dir/depend
 	$(MAKE) -f CMakeFiles/DDimage.dir/build.make CMakeFiles/DDimage.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/i82dianr/DDimage/CMakeFiles --progress-num=1,2,3 "Built target DDimage"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/i82dianr/DDimage/CMakeFiles --progress-num=1,2,3,4,5 "Built target DDimage"
 .PHONY : CMakeFiles/DDimage.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/DDimage.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/i82dianr/DDimage/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/i82dianr/DDimage/CMakeFiles 5
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/DDimage.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/i82dianr/DDimage/CMakeFiles 0
 .PHONY : CMakeFiles/DDimage.dir/rule

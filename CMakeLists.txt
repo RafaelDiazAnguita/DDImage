@@ -6,7 +6,9 @@ FIND_PACKAGE(OpenCV 3.0	REQUIRED )
 LINK_LIBRARIES(${OpenCV_LIBS})
 include_directories ("${OpenCV_INCLUDE_DIRS}")
 
-add_executable(DDimage main.cpp types.cpp)
+set(CMAKE_CXX_FLAGS "-g")
+
+add_executable(DDimage main.cpp types.cpp compare.cpp common.cpp)
 
 
  

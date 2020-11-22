@@ -4,6 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/i82dianr/DDimage/common.cpp" "/home/i82dianr/DDimage/CMakeFiles/DDimage.dir/common.cpp.o"
+  "/home/i82dianr/DDimage/compare.cpp" "/home/i82dianr/DDimage/CMakeFiles/DDimage.dir/compare.cpp.o"
   "/home/i82dianr/DDimage/main.cpp" "/home/i82dianr/DDimage/CMakeFiles/DDimage.dir/main.cpp.o"
   "/home/i82dianr/DDimage/types.cpp" "/home/i82dianr/DDimage/CMakeFiles/DDimage.dir/types.cpp.o"
   )

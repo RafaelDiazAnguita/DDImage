@@ -17,8 +17,16 @@
 
 using namespace std;
 
-
+//types.cpp
 bool read_types(vector<string> &types);
-bool check_type(string name);
+bool check_type(string name,vector<string> types);
+
+//compare.cpp
+vector<int> find_duplicate(vector<cv::Mat> &images, int n);
+bool equal(const cv::Mat & a, const cv::Mat & b);
+bool has(vector <int> index,int x);
+
+//common.cpp
+void src_list(const char *path,vector<string> &paths); 
 
 #endif 

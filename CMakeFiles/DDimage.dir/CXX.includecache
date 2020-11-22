@@ -30,7 +30,19 @@ opencv2/video.hpp
 opencv2/calib3d/calib3d.hpp
 -
 
+/home/i82dianr/DDimage/common.cpp
+DDimage.hpp
+/home/i82dianr/DDimage/DDimage.hpp
+
+/home/i82dianr/DDimage/compare.cpp
+DDimage.hpp
+/home/i82dianr/DDimage/DDimage.hpp
+
 /home/i82dianr/DDimage/main.cpp
+DDimage.hpp
+/home/i82dianr/DDimage/DDimage.hpp
+
+/home/i82dianr/DDimage/types.cpp
 DDimage.hpp
 /home/i82dianr/DDimage/DDimage.hpp
 
