@@ -8,7 +8,7 @@ include_directories ("${OpenCV_INCLUDE_DIRS}")
 
 set(CMAKE_CXX_FLAGS "-g")
 
-add_executable(DDimage main.cpp types.cpp)
+add_executable(DDimage main.cpp types.cpp compare.cpp common.cpp)
 
 
  
