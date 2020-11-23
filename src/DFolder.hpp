@@ -16,9 +16,10 @@ using namespace std;
 class DFolder{
 
     private:
-    string path_;
-    vector<string> files_,subfolders_,file_types_;
+    string path_,allowed_types_file_;
+    vector<string> files_,folders_,file_types_;
     vector<cv::Mat> images_;
+    vector<DFolder> subfolders_;
 
     /**
      * Check if the file has the correct type
@@ -74,9 +75,9 @@ class DFolder{
             path_=path+"/";
         else
             path_=path; 
-        read_types(allowed_types_file);
-        get_files(path);
-        get_images();
+        allowed_types_file_=allowed_types_file;
+        read_types(allowed_types_file_);
+        get_data(path_);
     }
 
     /**
@@ -99,10 +100,10 @@ class DFolder{
     }
 
     /**
-     * Get the path of the files inside the folder
+     * Get the files and subfolders
      * @param path path to the folder
      */
-    void get_files(string path) {
+    void get_data(string path) {
         //read paths
         struct dirent *entry;
         DIR *dir = opendir(path.c_str());
@@ -111,29 +112,18 @@ class DFolder{
             return;
         
         while ((entry = readdir(dir)) != NULL){
-            if(check_type(entry->d_name,file_types_))
+            //files
+            if(check_type(entry->d_name,file_types_)){
                 files_.push_back((string) path+entry->d_name);
+                images_.push_back(cv::imread((string) path+entry->d_name, cv::IMREAD_UNCHANGED));
+            }
+                
+            //folders
+            string name=entry->d_name;
+            if(name.find(".")==string::npos)
+                subfolders_.push_back(DFolder((string) path+entry->d_name,allowed_types_file_));
         }
         closedir(dir);
-    }
-
-    /**
-     * Get the files that are images(mainly) whit the allowed types
-     **/
-    void get_images(){
-        //save in cv::Mat vector
-        for (size_t i = 0; i < files_.size(); i++)
-        {
-            //read image i
-            cv::Mat img = cv::imread(files_[i], cv::IMREAD_UNCHANGED);
-            if (img.empty())
-            {
-                std::cerr << "Error: could not open input image '" << files_[i]
-                        << "'." << std::endl;
-                exit(-1);
-            }
-            images_.push_back(img);
-        }
     }
 
     /**
@@ -161,9 +151,10 @@ class DFolder{
     void remove_duplicate(){
         vector<int> duplicates=find_duplicate(images_);
         for (size_t i = 0; i < duplicates.size(); i++)
-        {
             remove(files_[duplicates[i]].c_str());
-        }
+        
+        for (size_t i = 0; i < subfolders_.size(); i++)
+            subfolders_[i].remove_duplicate();
     }
 
 };
