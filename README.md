@@ -9,7 +9,8 @@ Explore the code, you can use it for other tasks like compare images without rem
 
 * [jpg]
 * [png]
-##Requirements
+
+## Requirements
 
 * OpenCV c++ Version >= 3.3
 
