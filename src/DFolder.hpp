@@ -77,7 +77,8 @@ class DFolder{
             path_=path; 
         allowed_types_file_=allowed_types_file;
         read_types(allowed_types_file_);
-        get_data(path_);
+        read_data(path_);
+        get_data();
     }
 
     /**
@@ -103,7 +104,7 @@ class DFolder{
      * Get the files and subfolders
      * @param path path to the folder
      */
-    void get_data(string path) {
+    void read_data(string path) {
         //read paths
         struct dirent *entry;
         DIR *dir = opendir(path.c_str());
@@ -113,17 +114,21 @@ class DFolder{
         
         while ((entry = readdir(dir)) != NULL){
             //files
-            if(check_type(entry->d_name,file_types_)){
+            if(check_type(entry->d_name,file_types_))
                 files_.push_back((string) path+entry->d_name);
-                images_.push_back(cv::imread((string) path+entry->d_name, cv::IMREAD_UNCHANGED));
-            }
-                
             //folders
             string name=entry->d_name;
             if(name.find(".")==string::npos)
                 subfolders_.push_back(DFolder((string) path+entry->d_name,allowed_types_file_));
         }
         closedir(dir);
+    }
+    /**
+     *PushBack cv::Mats to images vector 
+     **/
+    void read_images(){
+        for (size_t i = 0; i < files_.size(); i++)
+            images_.push_back(cv::imread(files_[i], cv::IMREAD_UNCHANGED)); 
     }
 
     /**
@@ -144,17 +149,27 @@ class DFolder{
         return false;
     }
 
-    
+    /**
+     * Add to the files_ vector the subfolders files
+     * @param super_files the up folder files_ vector 
+     **/
+    vector<string> get_data(){
+        for (size_t i = 0; i < subfolders_.size(); i++)
+        {
+            vector<string> aux=subfolders_[i].get_data();
+            for (size_t j = 0; j < aux.size(); j++)
+                files_.push_back(aux[j]);
+        }
+        return files_;
+    }
     /**
      * Remove duplicate elements
      **/
     void remove_duplicate(){
+        read_images();
         vector<int> duplicates=find_duplicate(images_);
         for (size_t i = 0; i < duplicates.size(); i++)
             remove(files_[duplicates[i]].c_str());
-        
-        for (size_t i = 0; i < subfolders_.size(); i++)
-            subfolders_[i].remove_duplicate();
     }
 
 };
