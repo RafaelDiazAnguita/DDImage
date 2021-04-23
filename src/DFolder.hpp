@@ -1,24 +1,36 @@
 #include <iostream>
+#include <string>
 #include <vector>
 #include <dirent.h>
 #include <sys/types.h>
 #include <fstream>
+#include <filesystem>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/core/utility.hpp>
+
 #include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/video.hpp>
-#include <opencv2/calib3d/calib3d.hpp>
 
 using namespace std;
+
+class Pair{
+    private:
+        int original_,duplicated_;
+
+    public:
+        Pair(int original, int duplicated){
+            original_ = original;
+            duplicated_ = duplicated;
+        }
+
+        int get_original(){return original_;}
+        int get_duplicated(){return duplicated_;}
+
+};
 
 class DFolder{
 
     private:
     string path_,allowed_types_file_;
-    vector<string> files_,folders_,file_types_;
-    vector<cv::Mat> images_;
+    vector<string> files_,file_types_;
     vector<DFolder> subfolders_;
 
     /**
@@ -51,18 +63,43 @@ class DFolder{
      * @param images images vector
      * @return index vector for remove
      **/
-    vector<int> find_duplicate(vector<cv::Mat> &images)
+    vector<int> find_duplicate(vector<Pair> duplicate_sizes)
     {
         vector<int> index;
-        for (size_t i = 0; i < images.size(); i++)
-        for (size_t j = 0; j < images.size(); j++)
+        
+        for (size_t i = 0; i < duplicate_sizes.size(); i++)
         {
-            if(equal(images[i],images[j]) && j > i && !has(index,j))
-            index.push_back(j);
+            cv::Mat img1 = cv::imread(files_[duplicate_sizes[i].get_original()], cv::IMREAD_UNCHANGED);
+            cv::Mat img2 = cv::imread(files_[duplicate_sizes[i].get_original()], cv::IMREAD_UNCHANGED);
+            if(equal(img1,img2)){
+                index.push_back(duplicate_sizes[i].get_duplicated());
+            }
         }
+
+        
         return index;
     }
 
+    /**
+     * Find duplicated sizes
+     **/
+    vector<Pair> find_duplicate_size()
+    {
+        vector<int> index;
+        vector<Pair> pairs;
+        for (size_t i = 0; i < files_.size(); i++)
+        for (size_t j = i+1; j < files_.size(); j++){   
+                
+
+            if( !has(index,j) && std::filesystem::file_size(files_[i]) == std::filesystem::file_size(files_[j]) ){
+                index.push_back(j);
+                pairs.push_back(Pair(i,j));
+            }
+                    
+        }
+        
+        return pairs;
+    }
     public:
 
     /**
@@ -114,21 +151,20 @@ class DFolder{
         
         while ((entry = readdir(dir)) != NULL){
             //files
-            if(check_type(entry->d_name,file_types_))
+            if(check_type(entry->d_name,file_types_)){
+                cout<<"\r";
                 files_.push_back((string) path+entry->d_name);
+                cout<<"Reading file: "+ (string) path+entry->d_name;
+            }
+            
+                
             //folders
             string name=entry->d_name;
             if(name.find(".")==string::npos)
                 subfolders_.push_back(DFolder((string) path+entry->d_name,allowed_types_file_));
         }
+        cout<<endl;
         closedir(dir);
-    }
-    /**
-     *PushBack cv::Mats to images vector 
-     **/
-    void read_images(){
-        for (size_t i = 0; i < files_.size(); i++)
-            images_.push_back(cv::imread(files_[i], cv::IMREAD_UNCHANGED)); 
     }
 
     /**
@@ -166,10 +202,16 @@ class DFolder{
      * Remove duplicate elements
      **/
     void remove_duplicate(){
-        read_images();
-        vector<int> duplicates=find_duplicate(images_);
-        for (size_t i = 0; i < duplicates.size(); i++)
-            remove(files_[duplicates[i]].c_str());
+        cout<<"Finding duplicates... This may take some time, wait please."<<endl;
+        vector<Pair> duplicate_sizes = find_duplicate_size();
+        vector<int> duplicate_images = find_duplicate(duplicate_sizes);
+        for (size_t i = 0; i < duplicate_images.size(); i++){
+            cout<<"\r";
+            cout << "Removing file: "+ files_[i];
+            remove(files_[duplicate_images[i]].c_str());
+        }
+        cout<<endl;
     }
+    
 
 };
