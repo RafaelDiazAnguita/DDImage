@@ -77,9 +77,10 @@ class DFolder{
             if(equal(img1,img2)){
                 index.push_back(duplicate_sizes[i].get_duplicated());
             }
-            cout<<"\r";
+            
             float percent = i/(float)duplicate_sizes.size()*100;
-            cout<<"Completed -> "<<percent<<'%';
+            cout<<"\r"<<"% Completed -> "<<percent;
+            
         }
 
         
@@ -217,6 +218,7 @@ class DFolder{
             remove(files_[duplicate_images[i]].c_str());
         }
         cout<<endl;
+        cout<<"Finished."<<endl;
     }
     
 
