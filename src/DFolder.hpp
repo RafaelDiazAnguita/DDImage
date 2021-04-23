@@ -67,13 +67,19 @@ class DFolder{
     {
         vector<int> index;
         
-        for (size_t i = 0; i < duplicate_sizes.size(); i++)
+        for (float i = 0; i < duplicate_sizes.size(); i++)
         {
+            if(i == duplicate_sizes.size()-1)
+                int l=1;
+
             cv::Mat img1 = cv::imread(files_[duplicate_sizes[i].get_original()], cv::IMREAD_UNCHANGED);
             cv::Mat img2 = cv::imread(files_[duplicate_sizes[i].get_original()], cv::IMREAD_UNCHANGED);
             if(equal(img1,img2)){
                 index.push_back(duplicate_sizes[i].get_duplicated());
             }
+            cout<<"\r";
+            float percent = i/(float)duplicate_sizes.size()*100;
+            cout<<"Completed -> "<<percent<<'%';
         }
 
         
