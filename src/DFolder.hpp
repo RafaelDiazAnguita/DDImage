@@ -5,9 +5,14 @@
 #include <sys/types.h>
 #include <fstream>
 #include <filesystem>
+#include <exception>
 
 
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/core/utility.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 using namespace std;
 
@@ -69,18 +74,26 @@ class DFolder{
         
         for (float i = 0; i < duplicate_sizes.size(); i++)
         {
-            if(i == duplicate_sizes.size()-1)
-                int l=1;
-
+           
             cv::Mat img1 = cv::imread(files_[duplicate_sizes[i].get_original()], cv::IMREAD_UNCHANGED);
-            cv::Mat img2 = cv::imread(files_[duplicate_sizes[i].get_original()], cv::IMREAD_UNCHANGED);
-            if(equal(img1,img2)){
-                index.push_back(duplicate_sizes[i].get_duplicated());
-            }
+            cv::Mat img2 = cv::imread(files_[duplicate_sizes[i].get_duplicated()], cv::IMREAD_UNCHANGED);
+
             
+
+            if(!img1.empty() && !img2.empty())
+                if(equal(img1,img2)){
+                     
+                    //cv::imshow("imagen original",img1);
+                    //cv::imshow("imagen duplicada",img2);
+                    //cv::waitKey();
+                    index.push_back(duplicate_sizes[i].get_duplicated());                        
+                }
+                    
+                
             float percent = i/(float)duplicate_sizes.size()*100;
-            cout<<"\r"<<"% Completed -> "<<percent;
+            cout<<"\r"<<"% Completed (duplicate images) -> "<<percent;
             
+           
         }
 
         
@@ -94,16 +107,16 @@ class DFolder{
     {
         vector<int> index;
         vector<Pair> pairs;
-        for (size_t i = 0; i < files_.size(); i++)
-        for (size_t j = i+1; j < files_.size(); j++){   
-                
-
+        for (size_t i = 0; i < files_.size(); i++){
+            for (size_t j = i+1; j < files_.size(); j++)  
             if( !has(index,j) && std::filesystem::file_size(files_[i]) == std::filesystem::file_size(files_[j]) ){
                 index.push_back(j);
                 pairs.push_back(Pair(i,j));
             }
-                    
+            float percent = i/(float)files_.size()*100;
+            cout<<"\r"<<"% Completed (duplicate sizes) -> "<<percent;
         }
+        
         
         return pairs;
     }
@@ -122,7 +135,8 @@ class DFolder{
         allowed_types_file_=allowed_types_file;
         read_types(allowed_types_file_);
         read_data(path_);
-        get_data();
+        
+        cout << "Directory: "+path+" has readed "<<files_.size()<<endl;
     }
 
     /**
@@ -158,11 +172,9 @@ class DFolder{
         
         while ((entry = readdir(dir)) != NULL){
             //files
-            if(check_type(entry->d_name,file_types_)){
-                cout<<"\r";
+            if(check_type(entry->d_name,file_types_))
                 files_.push_back((string) path+entry->d_name);
-                cout<<"Reading file: "+ (string) path+entry->d_name;
-            }
+            
             
                 
             //folders
@@ -194,7 +206,6 @@ class DFolder{
 
     /**
      * Add to the files_ vector the subfolders files
-     * @param super_files the up folder files_ vector 
      **/
     vector<string> get_data(){
         for (size_t i = 0; i < subfolders_.size(); i++)
@@ -210,14 +221,22 @@ class DFolder{
      **/
     void remove_duplicate(){
         cout<<"Finding duplicates... This may take some time, wait please."<<endl;
+        get_data();
         vector<Pair> duplicate_sizes = find_duplicate_size();
         vector<int> duplicate_images = find_duplicate(duplicate_sizes);
         for (size_t i = 0; i < duplicate_images.size(); i++){
             cout<<"\r";
             cout << "Removing file: "+ files_[i];
-            remove(files_[duplicate_images[i]].c_str());
+            try{
+                remove(files_[duplicate_images[i]].c_str());
+            }
+            catch(exception e){
+               cerr << "Error:" <<e.what();
+            }
+            
         }
         cout<<endl;
+        cout<<duplicate_images.size()<< " files removed."<<endl;
         cout<<"Finished."<<endl;
     }
     
